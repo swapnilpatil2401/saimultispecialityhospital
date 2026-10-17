@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { navLinks } from "@/lib/site";
+import { hospitalContact, navLinks, phoneHref } from "@/lib/site";
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,15 +11,15 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="utility-bar">
         <div className="container utility-inner">
-          <p>Thoughtful healthcare, close to home</p>
-          <a href="#contact-cta">Need help? Send an enquiry <span aria-hidden="true">↗</span></a>
+          <p>Pimple Gurav · New Sangvi · Pune</p>
+          <a href={phoneHref(hospitalContact.phone)}>Call Now: {hospitalContact.phone}</a>
         </div>
       </div>
       <div className="container nav-row">
         <Link
           className="brand"
           href="/"
-          aria-label="Sangavi Hospital home"
+          aria-label="Sai Multispeciality Hospital home"
           onClick={() => setMenuOpen(false)}
         >
           <span className="brand-mark" aria-hidden="true">
@@ -27,8 +27,8 @@ export function SiteHeader() {
             <span />
           </span>
           <span className="brand-copy">
-            <strong>SANGAVI</strong>
-            <small>HOSPITAL &amp; HEALTHCARE</small>
+            <strong>SAI</strong>
+            <small>MULTISPECIALITY HOSPITAL</small>
           </span>
         </Link>
         <button
@@ -46,6 +46,12 @@ export function SiteHeader() {
           id="primary-navigation"
           className={`main-nav${menuOpen ? " is-open" : ""}`}
           aria-label="Main navigation"
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              setMenuOpen(false);
+              document.querySelector<HTMLButtonElement>(".menu-toggle")?.focus();
+            }
+          }}
         >
           {navLinks.map((link) => (
             <Link

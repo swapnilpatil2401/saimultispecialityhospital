@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/section-heading";
 import { ServiceCard } from "@/components/service-card";
-import { faqs, hospitalContact, mapSearchUrl, serviceArea, services } from "@/lib/site";
+import { DoctorCard } from "@/components/doctor-card";
+import { doctors } from "@/lib/doctors";
+import { faqs, featuredServices, hospitalContact, hospitalName, mapSearchUrl, phoneHref, serviceArea } from "@/lib/site";
 
 export default function Home() {
   const faqJsonLd = {
@@ -14,7 +16,7 @@ export default function Home() {
     })),
   };
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
@@ -24,16 +26,15 @@ export default function Home() {
         <div className="hero-orb orb-two" aria-hidden="true" />
         <div className="container hero-layout">
           <div className="hero-copy">
-            <p className="hero-kicker"><span /> Care that feels closer</p>
-            <h1>Good health begins with <em>being heard.</em></h1>
+            <p className="hero-kicker"><span /> {hospitalName} · Pune</p>
+            <h1>Care for your child.<br /><em>Surgical care for you.</em></h1>
             <p className="hero-lede">
-              Thoughtful, patient-first healthcare for families in Sangavi, New Sangavi, Pimple Saudagar and the wider Pune community.
+              Paediatrics, General Surgery, Endoscopic Surgery and Laparoscopic Surgery in Pimple Gurav, New Sangvi. A patient-focused approach, with clear guidance at every step.
             </p>
             <div className="hero-actions">
               <Link className="button" href="/contact#contact-form">Book an appointment <span aria-hidden="true">↗</span></Link>
-              {hospitalContact.phone
-                ? <a className="button button-outline" href={`tel:${hospitalContact.phone}`}>Call the hospital <span aria-hidden="true">↗</span></a>
-                : <Link className="button button-outline" href="/services">Explore our services</Link>}
+              <a className="button button-outline" href={phoneHref(hospitalContact.phone)}>Call Now <span aria-hidden="true">↗</span></a>
+              <Link className="text-link" href="/contact">Contact Us <span aria-hidden="true">↗</span></Link>
             </div>
             <div className="hero-note"><span className="note-icon" aria-hidden="true">✳</span><span>Care starts with a conversation.<br /><strong>We’re here to help you take the next step.</strong></span></div>
           </div>
@@ -43,7 +44,7 @@ export default function Home() {
               <div className="building-roof" />
               <div className="building-face">
                 <div className="building-cross"><span /><span /></div>
-                <div className="building-label">SANGAVI<br />HOSPITAL</div>
+                <div className="building-label">SAI MULTISPECIALITY<br />HOSPITAL</div>
                 <div className="building-windows"><i /><i /><i /></div>
                 <div className="building-door" />
               </div>
@@ -56,25 +57,25 @@ export default function Home() {
         </div>
         <div className="hero-bottom">
           <div className="container hero-bottom-inner">
-            <span>Healthcare for the community</span><span className="bottom-line" /><span>Sangavi · Pune, Maharashtra</span><span className="bottom-cross" aria-hidden="true">✳</span>
+            <a href={phoneHref(hospitalContact.phone)}>{hospitalContact.phone}</a><span className="bottom-line" /><a href={phoneHref(hospitalContact.landline)}>{hospitalContact.landline}</a><span>Pimple Gurav · Pune</span>
           </div>
         </div>
       </section>
 
       <section className="intro-section section-pad">
         <div className="container intro-grid">
-          <div className="intro-label"><span className="eyebrow">A little closer to home</span><span className="vertical-note">SANGAVI · PUNE</span></div>
+          <div className="intro-label"><span className="eyebrow">A little closer to home</span><span className="vertical-note">PIMPLE GURAV · PUNE</span></div>
           <div className="intro-content">
             <h2>Care is more than treatment.<br /><em>It’s how you feel along the way.</em></h2>
-            <div className="intro-lower"><p>At Sangavi Hospital, we believe every good care journey begins with a thoughtful conversation. Find information about our services, learn what to expect and reach out to our team when you’re ready.</p><Link className="text-link" href="/about">Get to know us <span aria-hidden="true">↗</span></Link></div>
+            <div className="intro-lower"><p>At Sai Multispeciality Hospital, Dr. Neha Naik provides child healthcare and Dr. Suresh Naik provides general, endoscopic and laparoscopic surgical care. Located at Govinda Market in Pimple Gurav, New Sangvi, we help families across Pune understand their options and arrange a consultation by phone or online enquiry.</p><Link className="text-link" href="/about">Get to know us <span aria-hidden="true">↗</span></Link></div>
           </div>
         </div>
       </section>
 
       <section className="services-section section-pad" id="services">
         <div className="container">
-          <div className="section-topline"><SectionHeading eyebrow="Care for every chapter" title="Our healthcare services" description="From everyday health questions to specialist consultations, explore care options and find the right place to begin." /><Link className="text-link desktop-link" href="/services">View all services <span aria-hidden="true">↗</span></Link></div>
-          <div className="service-grid">{services.slice(0, 6).map((service) => <ServiceCard key={service.slug} service={service} />)}</div>
+          <div className="section-topline"><SectionHeading eyebrow="Our medical specialties" title="Focused care. Personal attention." description="Child healthcare and surgical consultations, with treatment decisions guided by your individual needs." /><Link className="text-link desktop-link" href="/services">View our specialties <span aria-hidden="true">↗</span></Link></div>
+          <div className="service-grid specialty-grid">{featuredServices.map((service) => <ServiceCard key={service.slug} service={service} />)}</div>
           <Link className="text-link mobile-link" href="/services">View all services <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
@@ -87,12 +88,19 @@ export default function Home() {
             <div className="care-art-caption">A place to begin again</div>
           </div>
           <div className="care-copy">
-            <span className="eyebrow">Why Sangavi Hospital</span>
+            <span className="eyebrow">Why Sai Multispeciality Hospital</span>
             <h2>Human care.<br /><em>Clear next steps.</em></h2>
             <p>Finding healthcare should feel straightforward. We’re building a welcoming place where people can understand their options, ask questions and connect with the care they need.</p>
             <ul className="check-list"><li><span aria-hidden="true">✓</span> A patient-first approach to every conversation</li><li><span aria-hidden="true">✓</span> A range of healthcare services in one place</li><li><span aria-hidden="true">✓</span> Conveniently serving nearby Pune communities</li></ul>
             <Link className="button button-dark" href="/about">Discover our approach <span aria-hidden="true">↗</span></Link>
           </div>
+        </div>
+      </section>
+
+      <section className="community-section section-pad" aria-labelledby="home-doctors">
+        <div className="container">
+          <div className="section-heading"><span className="eyebrow">Meet your doctors</span><h2 id="home-doctors">People behind your care.</h2><p>Get to know our paediatric and surgical clinicians. Contact us to confirm consultation availability.</p></div>
+          <div className="doctor-grid">{doctors.map((doctor) => <DoctorCard key={doctor.slug} doctor={doctor} />)}</div>
         </div>
       </section>
 
@@ -108,13 +116,13 @@ export default function Home() {
 
       <section className="location-section section-pad">
         <div className="container location-layout">
-          <div className="location-copy"><span className="eyebrow">Close to your community</span><h2>Care that’s<br /><em>within reach.</em></h2><p>Looking for a hospital near Sangavi, New Sangavi or Pimple Saudagar? Sangavi Hospital is focused on serving families across Pimpri-Chinchwad and Pune.</p><div className="area-chips">{serviceArea.slice(0, 4).map((area) => <span key={area}>{area}</span>)}</div><Link className="text-link" href="/contact">Get in touch <span aria-hidden="true">↗</span></Link></div>
+          <div className="location-copy"><span className="eyebrow">Close to your community</span><h2>Care that’s<br /><em>within reach.</em></h2><p>Visit Sai Multispeciality Hospital in Pimple Gurav, New Sangvi, Pune.</p><address>{hospitalContact.address}</address><p><a href={phoneHref(hospitalContact.phone)}>{hospitalContact.phone}</a><br /><a href={phoneHref(hospitalContact.landline)}>{hospitalContact.landline}</a></p><div className="area-chips">{serviceArea.slice(0, 4).map((area) => <span key={area}>{area}</span>)}</div><Link className="text-link" href="/contact">Contact Us <span aria-hidden="true">↗</span></Link></div>
           <div className="map-card">
             <div className="map-grid" aria-hidden="true"><span className="map-road road-one" /><span className="map-road road-two" /><span className="map-road road-three" /><span className="map-road road-four" /><span className="map-park park-one" /><span className="map-park park-two" /></div>
             <div className="map-pin"><span>✚</span></div>
-            <div className="map-label"><strong>Sangavi Hospital</strong><span>{hospitalContact.address || "Sangavi · Pune, Maharashtra"}</span></div>
-            <a className="map-open" href={mapSearchUrl} target="_blank" rel="noreferrer">Search on Google Maps <span aria-hidden="true">↗</span></a>
-            <p className="map-disclaimer">Confirm the hospital’s exact address before travelling.</p>
+            <div className="map-label"><strong>Sai Multispeciality Hospital</strong><span>{hospitalContact.address || "Pimple Gurav · Pune, Maharashtra"}</span></div>
+            <a className="map-open" href={mapSearchUrl} target="_blank" rel="noreferrer">Get Directions <span aria-hidden="true">↗</span></a>
+            <p className="map-disclaimer">Illustrative map. Open Google Maps for directions.</p>
           </div>
         </div>
       </section>

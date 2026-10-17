@@ -14,7 +14,7 @@ export default function ErrorPage({
   }, [error]);
 
   return (
-    <main className="container not-found" id="main-content">
+    <main className="container not-found" id="main-content" tabIndex={-1}>
       <span className="eyebrow">Something went wrong</span>
       <h1>Let’s try<br /><em>that again.</em></h1>
       <p>The page could not be loaded just now. Please try again, or return to the home page.</p>

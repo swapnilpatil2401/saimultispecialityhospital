@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
+import { hospitalContact, hospitalName, phoneHref } from "@/lib/site";
 
 type FormState = { status: "idle" | "sending" | "success" | "error"; message: string };
 
@@ -54,7 +55,8 @@ export function ContactForm() {
       <div className="form-heading">
         <span className="eyebrow">Write to us</span>
         <h2>How can we help?</h2>
-        <p>Share a few details and our team can get back to you.</p>
+        <p>Send an appointment request to {hospitalName}. Our team will confirm availability by contacting you.</p>
+        <p><a href={phoneHref(hospitalContact.phone)}>{hospitalContact.phone}</a> · <a href={phoneHref(hospitalContact.landline)}>{hospitalContact.landline}</a></p>
       </div>
       <div className="form-grid">
         <div className="field">
@@ -71,7 +73,13 @@ export function ContactForm() {
         </div>
         <div className="field">
           <label htmlFor="subject">Subject <span aria-hidden="true">*</span></label>
-          <input id="subject" name="subject" required maxLength={120} />
+          <input id="subject" name="subject" list="specialty-subjects" required maxLength={120} />
+          <datalist id="specialty-subjects">
+            <option value="Paediatrics appointment - Dr. Neha Naik" />
+            <option value="General Surgery appointment - Dr. Suresh Naik" />
+            <option value="Endoscopic Surgery enquiry" />
+            <option value="Laparoscopic Surgery enquiry" />
+          </datalist>
         </div>
         <div className="field field-full">
           <label htmlFor="message">Message <span aria-hidden="true">*</span></label>

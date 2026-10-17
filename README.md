@@ -1,6 +1,18 @@
-# Sangavi Hospital website
+# Sai Multispeciality Hospital website
 
-A responsive Next.js website for Sangavi Hospital, with local service pages, doctor profile support, accessibility features, SEO metadata and structured data, `sitemap.xml`, `robots.txt`, and a contact form API for email and persistent inquiry storage.
+A responsive Next.js App Router website for Sai Multispeciality Hospital in Pimple Gurav, New Sangvi, Pune. It uses a shared blue-and-white theme, dedicated specialty pages, verified doctor profiles, accessibility features, local SEO metadata and structured data, `sitemap.xml`, `robots.txt`, and a contact form API for email and persistent inquiry storage.
+
+## Hospital content
+
+- Featured specialties: Paediatrics / Pediatrics, General Surgery, Endoscopic Surgery and Laparoscopic Surgery.
+- Dr. Suresh Naik: MS General Surgeon; General Surgery, Endoscopic Surgery and Laparoscopic Surgery.
+- Dr. Neha Naik: MD Pediatrics, DNB Pediatrics; Paediatrics / Pediatrics.
+- Address: Govinda Market, Opposite Samarth Nagar, Shivaji Park, Pimple Gurav, New Sangvi, Pune – 411061.
+- Phone: +91 93739 10945 and 020-29992511.
+
+Contact information and featured specialties live in `src/lib/site.ts`; verified profiles live in `src/lib/doctors.ts`. Existing service URLs remain accessible, but unconfirmed departments are presented as general information rather than advertised services. No opening hours, emergency provision, experience claims or doctor photos have been added. Healthcare illustrations are decorative, not photographs of the actual premises.
+
+Appointment buttons open the existing enquiry form. A successful submission is an enquiry, not a confirmed appointment. The existing email, spreadsheet and rate-limiting integrations are preserved.
 
 ## Local development
 
@@ -26,7 +38,7 @@ Set the integration variables below before submitting the contact form. The form
 Resend's shared sender can send only to the email address associated with your Resend account. Set these values in `.env.local`, keeping your existing `RESEND_API_KEY`:
 
 ```dotenv
-CONTACT_FROM_EMAIL="Sangavi Hospital <onboarding@resend.dev>"
+CONTACT_FROM_EMAIL="Sai Multispeciality Hospital <onboarding@resend.dev>"
 CONTACT_TO_EMAIL=your-resend-account-email@example.com
 ```
 
@@ -59,11 +71,12 @@ See `.env.example`. Add the provider credentials to Vercel Project Settings for 
 
 ## Hospital-specific launch checklist
 
-The supplied brief did not include an exact street address, public phone number, opening hours, verified clinician names and qualifications, or confirmed facility/service availability. Those facts are not invented in the current site. Before launch:
+The supplied hospital name, address, phone numbers, doctors and four specialties are now used throughout the site. Before launch:
 
-- Verify that the hardcoded canonical domain and public hospital contact details in `src/lib/site.ts` are correct and that the Google Maps search points to the right location.
-- Update `src/lib/doctors.ts` with profiles only after names, qualifications, experience, specialities, expertise and consultation details are verified.
-- Review the service and facility content against the hospital's actual offerings.
+- Verify the existing canonical domain (`https://sangavi-hospital.com`) and public email (`info@sangavi-hospital.com`) in `src/lib/site.ts`. They have been preserved because no replacements were supplied.
+- Confirm the Google Maps destination and entrance before publishing.
+- Add approved doctor photographs only when available; do not substitute stock portraits.
+- Confirm consultation timings and any additional departments or facilities before advertising them.
 - Add approved patient testimonials only after obtaining permission and confirming that the wording is accurate.
 - Review the privacy policy, terms, data retention and patient information handling with the responsible team.
 - Test all contact integrations in the deployed Vercel environment.
@@ -72,7 +85,11 @@ The supplied brief did not include an exact street address, public phone number,
 
 ```powershell
 npm run lint
+npm run typecheck
+npm test
 npm run build
 ```
+
+The regression tests use Node.js native TypeScript support (Node.js 22.18+ or 24+), without additional test dependencies. They verify hospital details, telephone links, map destination, specialty coverage, preserved service URLs, doctor credentials, structured data and core WCAG AA palette contrast. For release, also check mobile navigation, keyboard focus, reduced motion and the enquiry form in a browser. Test delivery with approved test data in a non-production environment to avoid creating real patient enquiries.
 
 Import the project into Vercel, choose the Next.js framework preset and configure production environment variables. The project uses standard Next.js routing and build settings, with no persistent local storage or custom Vercel build configuration.

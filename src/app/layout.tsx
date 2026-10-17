@@ -7,27 +7,27 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Sangavi Hospital | Patient-focused care in Pune",
-    template: "%s | Sangavi Hospital",
+    default: "Sai Multispeciality Hospital Pune | Paediatrics & Surgery",
+    template: "%s | Sai Multispeciality Hospital",
   },
   description:
-    "Explore patient-focused healthcare services for Sangavi, New Sangavi, Pimple Saudagar and Pimpri-Chinchwad. Contact Sangavi Hospital to make an enquiry.",
-  applicationName: "Sangavi Hospital",
+    "Paediatrics, General, Endoscopic and Laparoscopic Surgery in Pimple Gurav, New Sangvi, Pune. Meet Dr. Neha Naik and Dr. Suresh Naik. Call +91 93739 10945.",
+  applicationName: "Sai Multispeciality Hospital",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_IN",
-    siteName: "Sangavi Hospital",
-    title: "Sangavi Hospital | Patient-focused care in Pune",
+    siteName: "Sai Multispeciality Hospital",
+    title: "Sai Multispeciality Hospital Pune | Paediatrics & Surgery",
     description:
-      "Explore patient-focused healthcare services for Sangavi, New Sangavi, Pimple Saudagar and Pimpri-Chinchwad.",
+      "Child healthcare and surgical consultations in Pimple Gurav, New Sangvi. Meet Dr. Neha Naik and Dr. Suresh Naik.",
     url: "/",
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Sangavi Hospital | Patient-focused care in Pune",
+    card: "summary",
+    title: "Sai Multispeciality Hospital Pune | Paediatrics & Surgery",
     description:
-      "Explore patient-focused healthcare services for Sangavi, New Sangavi, Pimple Saudagar and Pimpri-Chinchwad.",
+      "Paediatrics, General Surgery, Endoscopic Surgery and Laparoscopic Surgery in Pimple Gurav, New Sangvi, Pune.",
   },
   robots: { index: true, follow: true },
 };

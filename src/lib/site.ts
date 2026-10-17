@@ -1,25 +1,27 @@
 export const siteUrl = "https://sangavi-hospital.com";
 
-export const hospitalName = "Sangavi Hospital";
+export const hospitalName = "Sai Multispeciality Hospital";
 export const serviceArea = [
-  "Sangavi",
-  "New Sangavi",
+  "Pimple Gurav",
+  "New Sangvi",
   "Pimple Saudagar",
   "Pimpri-Chinchwad",
   "Pune",
 ];
 
 export const hospitalContact = {
-  address: "New Sangavi Hospital, New Sangavi Pune",
-  phone: "+91 98765 43210",
+  address: "Govinda Market, Opposite Samarth Nagar, Shivaji Park, Pimple Gurav, New Sangvi, Pune – 411061",
+  phone: "+91 93739 10945",
+  landline: "020-29992511",
   email: "info@sangavi-hospital.com",
-  hours: "24/7",
-  emergencyContact: "+91 98765 43210",
 };
 
-export const mapSearchUrl = `https://maps.google.com/?q=${encodeURIComponent(
-  hospitalContact.address || "Sangavi Hospital Sangavi Pune",
-)}`;
+export function phoneHref(phone: string) {
+  const digits = phone.replace(/[^\d+]/g, "");
+  return `tel:${digits.startsWith("0") ? `+91${digits.slice(1)}` : digits}`;
+}
+
+export const mapSearchUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(hospitalContact.address)}`;
 
 export const navLinks = [
   { label: "Home", href: "/" },
@@ -31,6 +33,46 @@ export const navLinks = [
 ];
 
 export const services = [
+  {
+    slug: "pediatrics",
+    title: "Paediatrics / Pediatrics",
+    shortDescription:
+      "Child healthcare and paediatric consultations with Dr. Neha Naik in Pimple Gurav.",
+    description:
+      "Dr. Neha Naik (MD Pediatrics, DNB Pediatrics) provides paediatric consultations at Sai Multispeciality Hospital. Families looking for a paediatrician in Pimple Gurav or a pediatrician in New Sangvi can discuss their child's health concerns and next steps in care. Contact the team to arrange a consultation.",
+    icon: "✳",
+    color: "blue",
+  },
+  {
+    slug: "general-surgery",
+    title: "General Surgery",
+    shortDescription:
+      "Surgical consultation, evaluation and treatment planning with Dr. Suresh Naik.",
+    description:
+      "Dr. Suresh Naik (MS General Surgeon) offers general surgical consultation, evaluation and treatment at Sai Multispeciality Hospital. If you are looking for a general surgeon in New Sangvi or Pimple Gurav, a consultation can help you understand your diagnosis, treatment options, potential risks and next steps.",
+    icon: "✚",
+    color: "blue",
+  },
+  {
+    slug: "endoscopic-surgery",
+    title: "Endoscopic Surgery",
+    shortDescription:
+      "Explore endoscopic surgical options with Dr. Suresh Naik in Pune.",
+    description:
+      "Endoscopic surgery uses a camera-equipped instrument to help a surgeon view and, where appropriate, treat an area inside the body. Dr. Suresh Naik's specialties include endoscopic surgery. People seeking an endoscopic surgeon in Pune can contact Sai Multispeciality Hospital to discuss their concern and whether an endoscopic approach is suitable. Specific procedures and preparation must be confirmed with the treating surgeon.",
+    icon: "⌕",
+    color: "blue",
+  },
+  {
+    slug: "laparoscopic-surgery",
+    title: "Laparoscopic Surgery",
+    shortDescription:
+      "Individual assessment for minimally invasive surgery where clinically appropriate.",
+    description:
+      "Laparoscopic surgery uses small incisions and a camera to guide surgery within the abdomen. Dr. Suresh Naik's specialties include laparoscopic surgery. For suitable patients, a minimally invasive approach may offer smaller incisions and a shorter recovery than open surgery, but benefits and risks vary by procedure and individual circumstances. If you are looking for a laparoscopic surgeon in Pune, contact the hospital for an assessment. Not every condition is suitable for this approach.",
+    icon: "⌁",
+    color: "blue",
+  },
   {
     slug: "general-medicine",
     title: "General Medicine",
@@ -60,16 +102,6 @@ export const services = [
       "Orthopedic care addresses concerns affecting bones, joints and movement. The care team can help you understand available consultation options and the right next step for your needs.",
     icon: "⌁",
     color: "blue",
-  },
-  {
-    slug: "pediatrics",
-    title: "Pediatrics",
-    shortDescription:
-      "Healthcare support for infants, children and adolescents.",
-    description:
-      "Pediatric consultations are designed around the health and wellbeing of children and adolescents. Contact the hospital to ask about availability and appointment arrangements.",
-    icon: "✳",
-    color: "yellow",
   },
   {
     slug: "gynecology",
@@ -113,6 +145,8 @@ export const services = [
   },
 ] as const;
 
+export const featuredServices = services.slice(0, 4);
+
 export const faqs = [
   {
     question: "How can I enquire about an appointment?",
@@ -120,9 +154,9 @@ export const faqs = [
       "Use the contact form on this website and tell us which service you need. The hospital team can follow up using the contact details you provide.",
   },
   {
-    question: "Which areas does Sangavi Hospital serve?",
+    question: "Which specialties are available at Sai Multispeciality Hospital?",
     answer:
-      "The website is intended for people looking for healthcare in Sangavi, New Sangavi, Pimple Saudagar, Pimpri-Chinchwad and nearby parts of Pune.",
+      "Our specialties are Paediatrics, General Surgery, Endoscopic Surgery and Laparoscopic Surgery. Dr. Neha Naik provides paediatric care, and Dr. Suresh Naik provides surgical care in Pimple Gurav, New Sangvi, Pune.",
   },
   {
     question: "Can I use the contact form for a medical emergency?",
@@ -141,7 +175,8 @@ export const organizationJsonLd = {
   "@type": "Hospital",
   name: hospitalName,
   description:
-    "Patient-focused healthcare information and services for Sangavi, New Sangavi, Pimple Saudagar and Pimpri-Chinchwad, Pune.",
+    "Paediatrics, General Surgery, Endoscopic Surgery and Laparoscopic Surgery in Pimple Gurav, New Sangvi, Pune.",
+  "@id": `${siteUrl}/#hospital`,
   url: siteUrl,
   areaServed: serviceArea.map((name) => ({
     "@type": "City",
@@ -153,16 +188,15 @@ export const organizationJsonLd = {
     addressLocality: "Pune",
     addressRegion: "Maharashtra",
     addressCountry: "IN",
+    postalCode: "411061",
   },
   telephone: hospitalContact.phone,
-  email: hospitalContact.email,
-  medicalSpecialty: [
-    "PrimaryCare",
-    "Cardiovascular",
-    "Orthopedic",
-    "Pediatric",
-    "Gynecologic",
+  contactPoint: [
+    { "@type": "ContactPoint", telephone: hospitalContact.phone, contactType: "appointments" },
+    { "@type": "ContactPoint", telephone: "+912029992511", contactType: "hospital enquiries" },
   ],
+  medicalSpecialty: ["https://schema.org/Pediatric", "https://schema.org/Surgical"],
+  hasMap: mapSearchUrl,
 };
 
 export function absoluteUrl(path: string) {
